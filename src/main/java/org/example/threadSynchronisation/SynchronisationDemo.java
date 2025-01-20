@@ -2,17 +2,20 @@ package org.example.threadSynchronisation;
 
 public class SynchronisationDemo {
 
-    private static int counter = 0;
+    private static int counter1 = 0;
+    private static int counter2 = 0;
+
+
     public static void main(String[] args) {
         Thread one = new Thread(() -> {
             for(int i = 0; i  < 10000; i++) {
-                increment();
+                increment1();
             }
         });
 
         Thread two = new Thread(() -> {
             for(int i = 0; i  < 10000; i++) {
-                increment();
+                increment2();
             }
         });
 
@@ -27,14 +30,24 @@ public class SynchronisationDemo {
         }
 
 
-        System.out.println("Counter value : " + counter); // Expected output 20000
+        System.out.println("Counter value : " + counter1 + " -- " + counter2); // Expected output 20000
     }
 
     // synchronized keyword tells jvm to allow this method to be accessed by only one thread at a time at any cost
-    private synchronized static void increment(){
-        counter++; // this is a critical section
+    private synchronized static void increment1(){
+        counter1++; // this is a critical section
         //limiting its access by only one thread at a time
     }
+
+    private synchronized static void increment2(){
+        counter2++; // this is a critical section
+        //limiting its access by only one thread at a time
+    }
+
+    //The increment2 method due to it being static is going to cause entire class to be locked
+    //This means that the thread for operating on counter1 even though it has nothing to do with counter2 is locked
+    //due to class locking
+    // this is why synchronised in the method definition is not good for static methods
 
 }
 
