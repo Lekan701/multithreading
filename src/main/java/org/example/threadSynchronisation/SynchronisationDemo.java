@@ -44,7 +44,7 @@ public class SynchronisationDemo {
         //limiting its access by only one thread at a time
     }
 
-    //The increment2 method due to it being static is going to cause entire class to be locked
+    //The increment methods due to it being static is going to cause entire class to be locked
     //This means that the thread for operating on counter1 even though it has nothing to do with counter2 is locked
     //due to class locking
     // this is why synchronised in the method definition is not good for static methods
